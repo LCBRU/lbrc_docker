@@ -1,8 +1,0 @@
-services:
-  webapp:
-    container_name: webapp
-    image: lcbruit/pythonwebappbase:latest
-    ports:
-      - "127.0.0.1:8080:8080"
-    volumes:
-        - ./src:/app
