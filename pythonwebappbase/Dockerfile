@@ -1,8 +1,5 @@
 FROM lcbruit/pythonbase:latest
 
-# Install some of the common packages that (many) don't change often so later images build faster.
-RUN apt-get install -y libsasl2-dev python-dev-is-python3 libldap2-dev libssl-dev weasyprint
-
 # Make sure we have the latest web servers if the bases are cached.
 RUN uv pip install --upgrade granian[pname]
 
@@ -17,8 +14,8 @@ ENTRYPOINT [  \
     "--port","8080", \
     "--interface","wsgi", \
     "--no-ws", \
-    "--workers","2", \
-    "--threads","4", \
+    "--workers","1", \
+    "--threads","2", \
     "--loop","uvloop", \
     "--log-level","info",\
     "--log", \

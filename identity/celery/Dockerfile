@@ -1,4 +1,9 @@
-FROM lcbruit/identity_web:latest
+FROM lcbruit/pythonbase:latest
+
+RUN git clone https://github.com/LCBRU/identity.git /src/
+WORKDIR /src/
+
+RUN uv pip install -r requirements.txt
 
 # Only needed to connect to SQL 2008
 RUN apt-get update -yqq \

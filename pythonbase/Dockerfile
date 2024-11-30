@@ -3,6 +3,9 @@ FROM lcbruit/linuxbase:latest
 ENV PATH=/venv/bin:$PATH
 ENV PATH=/root/.cargo/bin:$PATH
 
+# Install some of the common packages that (many) don't change often so later images build faster.
+RUN apt-get install -y libsasl2-dev python-dev-is-python3 libldap2-dev libssl-dev weasyprint
+
 # Download the latest installer
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
