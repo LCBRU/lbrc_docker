@@ -1,6 +1,8 @@
-FROM php:7.4-apache
+FROM php:8.3-apache
 
 LABEL maintainer="rabramley@gmail.com"
+
+RUN a2enmod rewrite
 
 RUN apt-get update -qq && \
     apt-get -yq --no-install-recommends install \
@@ -11,6 +13,7 @@ RUN apt-get update -qq && \
     libzip-dev \
     libldap2-dev \
     curl \
+    wget \
     vim \
     unzip \
     iputils-ping \
@@ -28,6 +31,9 @@ RUN chown -R www-data:www-data /edocs/
 # Supervisord ro run both cron and apache
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+# Apache config
+ADD 000-default.conf /etc/apache2/sites-enabled/
 
 # Suggested PHP config changes
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"

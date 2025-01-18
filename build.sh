@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# # Python
-# docker build -t lcbruit/linuxbase:latest ./linuxbase
-# docker build -t lcbruit/pythonbase:latest ./pythonbase
-# docker build -t lcbruit/pythonwebappbase:latest ./pythonwebappbase
+# Python
+docker build -t lcbruit/linuxbase:latest ./linuxbase
+docker build -t lcbruit/pythonbase:latest ./pythonbase
+docker build -t lcbruit/pythonwebappbase:latest ./pythonwebappbase
 
-# ## Identity
-# docker build --no-cache -t lcbruit/identity_web:latest ./identity/web
-# docker build --no-cache -t lcbruit/identity_celery:latest ./identity/celery
+## Identity
+docker build --no-cache -t lcbruit/identity_web:latest ./identity/web
+docker build --no-cache -t lcbruit/identity_celery:latest ./identity/celery
 
 # REDCap
 docker build -t lcbruit/redcapbase:latest ./redcapbase
