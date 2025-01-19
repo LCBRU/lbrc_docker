@@ -12,6 +12,8 @@ RUN apt-get update -qq && \
     libpng-dev \
     libzip-dev \
     libldap2-dev \
+    ghostscript \
+    libmagickwand-dev \
     curl \
     wget \
     vim \
@@ -20,6 +22,12 @@ RUN apt-get update -qq && \
     default-mysql-client \
     && docker-php-ext-install gd zip mysqli \
     && rm -r /var/lib/apt/lists/*
+
+RUN curl -fsSL https://github.com/Imagick/imagick/archive/944b67fce68bcb5835999a149f917670555b6fcb.tar.gz | tar xvz -C /tmp \
+    && yes '' | pecl install /tmp/imagick-944b67fce68bcb5835999a149f917670555b6fcb/package.xml \
+    && docker-php-ext-enable imagick
+
+RUN sed -i 's/policy\ domain=\"coder\" rights=\"none\" pattern=\"PDF\"/policy domain=\"coder\" rights=\"read\" pattern=\"PDF\"/g' /etc/ImageMagick-6/policy.xml
 
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu
 RUN docker-php-ext-install ldap
