@@ -14,6 +14,13 @@ build_identity: .identity.built
 	docker build --no-cache -t lcbruit/identity_celery:latest ./identity/celery
 	touch $@
 
+build_image_study_merge: .image_study_merge.built
+
+.image_study_merge.built: .python.built 
+	docker build --no-cache -t lcbruit/image_study_merge_web:latest ./image_study_merge/web
+	docker build --no-cache -t lcbruit/image_study_merge_celery:latest ./image_study_merge/celery
+	touch $@
+
 build_redcap: .redcap.built
 
 .redcap.built:
@@ -46,6 +53,13 @@ push_identity: .identity.pushed
 .identity.pushed: .python.pushed
 	docker push lcbruit/identity_web:latest
 	docker push lcbruit/identity_celery:latest
+	touch $@
+
+push_image_study_merge: .image_study_merge.pushed
+
+.image_study_merge.pushed: .python.pushed
+	docker push lcbruit/image_study_merge_web:latest
+	docker push lcbruit/image_study_merge_celery:latest
 	touch $@
 
 push_redcap: .redcap.pushed
