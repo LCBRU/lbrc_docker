@@ -21,6 +21,12 @@ build_image_study_merge: .image_study_merge.built
 	docker build --no-cache -t lcbruit/image_study_merge_celery:latest ./image_study_merge/celery
 	touch $@
 
+build_genvasc_portal: .genvasc_portal.built
+
+.genvasc_portal.built: .python.built 
+	docker build --no-cache -t lcbruit/genvasc_portal_web:latest ./genvasc_portal
+	touch $@
+
 build_redcap: .redcap.built
 
 .redcap.built:
@@ -37,7 +43,7 @@ build_redcap: .redcap.built
 build_clean:
 	rm -f .*.built
 
-build_all: .python.built .identity.built .redcap.built
+build_all: .python.built .identity.built .image_study_merge.built .genvasc_portal.built .redcap.built
 
 # Pushing
 push_python: .python.pushed
@@ -62,6 +68,12 @@ push_image_study_merge: .image_study_merge.pushed
 	docker push lcbruit/image_study_merge_celery:latest
 	touch $@
 
+push_genvasc_portal: .genvasc_portal.pushed
+
+.genvasc_portal.pushed: .python.pushed
+	docker push lcbruit/genvasc_portal_web:latest
+	touch $@
+
 push_redcap: .redcap.pushed
 
 .redcap.pushed:
@@ -78,4 +90,4 @@ push_redcap: .redcap.pushed
 push_clean:
 	rm -f .*.pushed
 
-push_all: .python.pushed .identity.pushed .redcap.pushed
+push_all: .python.pushed .identity.pushed .image_study_merge.pushed .genvasc_portal.pushed .redcap.pushed
