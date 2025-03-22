@@ -1,4 +1,10 @@
 # Building
+build_airflow: .airflow.built
+
+.airflow.built:
+	docker build -t lcbruit/airflow:latest ./airflow
+	touch $@
+
 build_python: .python.built
 
 .python.built:
@@ -24,7 +30,19 @@ build_image_study_merge: .image_study_merge.built
 build_genvasc_portal: .genvasc_portal.built
 
 .genvasc_portal.built: .python.built 
-	docker build --no-cache -t lcbruit/genvasc_portal_web:latest ./genvasc_portal
+	docker build --no-cache -t lcbruit/genvasc_portal:latest ./genvasc_portal
+	touch $@
+
+build_link_checker: .link_checker.built
+
+.link_checker.built: .python.built 
+	docker build --no-cache -t lcbruit/link_checker:latest ./link_checker
+	touch $@
+
+build_mssql_github: .mssql_github.built
+
+.mssql_github.built: .python.built 
+	docker build --no-cache -t lcbruit/mssql_github:latest ./mssql_github
 	touch $@
 
 build_redcap: .redcap.built
@@ -43,9 +61,15 @@ build_redcap: .redcap.built
 build_clean:
 	rm -f .*.built
 
-build_all: .python.built .identity.built .image_study_merge.built .genvasc_portal.built .redcap.built
+build_all: .airflow.built .python.built .identity.built .image_study_merge.built .link_checker.built .redcap.built
 
 # Pushing
+push_airflow: .airflow.pushed
+
+.airflow.pushed:
+	docker push lcbruit/airflow:latest
+	touch $@
+
 push_python: .python.pushed
 
 .python.pushed:
@@ -71,7 +95,19 @@ push_image_study_merge: .image_study_merge.pushed
 push_genvasc_portal: .genvasc_portal.pushed
 
 .genvasc_portal.pushed: .python.pushed
-	docker push lcbruit/genvasc_portal_web:latest
+	docker push lcbruit/genvasc_portal:latest
+	touch $@
+
+push_link_checker: .link_checker.pushed
+
+.link_checker.pushed: .python.pushed
+	docker push lcbruit/link_checker:latest
+	touch $@
+
+push_mssql_github: .mssql_github.pushed
+
+.mssql_github.pushed: .python.pushed
+	docker push lcbruit/mssql_github:latest
 	touch $@
 
 push_redcap: .redcap.pushed
@@ -90,4 +126,6 @@ push_redcap: .redcap.pushed
 push_clean:
 	rm -f .*.pushed
 
-push_all: .python.pushed .identity.pushed .image_study_merge.pushed .genvasc_portal.pushed .redcap.pushed
+push_all: .python.pushed .identity.pushed .image_study_merge.pushed link_checker.pushed .redcap.pushed
+
+clean: build_clean push_clean

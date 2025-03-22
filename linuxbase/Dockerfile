@@ -12,7 +12,9 @@ RUN apt-get upgrade -y
 RUN apt-get -y install locales git curl wget
 RUN locale-gen en_GB.UTF-8
 
-RUN apt-get install -y clang
-RUN apt-get install -y gcc
-RUN apt-get install -y build-essential
-RUN apt-get install -y openssl
+RUN apt-get install -y \
+    clang \
+    gcc \
+    build-essential \
+    openssl
+RUN apt-get clean
