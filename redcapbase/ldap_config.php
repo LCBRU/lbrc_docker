@@ -2,7 +2,7 @@
 
 $GLOBALS['ldapdsn'] = array(
     array(
-        'host' 		 => getenv("LDAP_HOST"),
+        'url' 		 => getenv("LDAP_HOST"),
         'port' 		 => getenv("LDAP_PORT"),
         'version'  	 => '3',
         'basedn'     => getenv("LDAP_BASEDN"),
