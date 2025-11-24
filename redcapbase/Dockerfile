@@ -65,7 +65,7 @@ ADD ldap_config.php /var/www/redcap/redcap/webtools2/ldap/ldap_config.php
 
 # Copy in Advanced Reporting Module files
 ADD advanced_reports_v*.zip /var/www/redcap/
-RUN unzip /var/www/redcap/advanced_reports_v*.zip -d /var/www/redcap/modules/
+RUN unzip /var/www/redcap/advanced_reports_v*.zip -d /var/www/redcap/redcap/modules/
 RUN rm /var/www/redcap/advanced_reports_v*.zip
 
 RUN ln -s /var/www/redcap/redcap/hook_functions.php /var/www/html/
