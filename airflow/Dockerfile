@@ -1,6 +1,6 @@
 ARG AIRFLOW_IMAGE
 
-FROM apache/airflow:2.8.4-python3.10
+FROM apache/airflow:2.8.4-python3.11
 
 COPY packages.txt .
 USER root
