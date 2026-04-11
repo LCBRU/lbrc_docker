@@ -47,7 +47,7 @@ RUN sh /uv-installer.sh && rm /uv-installer.sh
 ENV PATH="/root/.local/bin/:$PATH"
 
 # set up a virtual env to use for whatever app is destined for this container.
-RUN uv venv --python 3.12 /venv
+RUN uv venv --python 3.13 /venv
 
 RUN echo "\nsource /venv/bin/activate\n" >> /root/.zshrc
 RUN echo "\nsource /venv/bin/activate\n" >> /root/.bashrc
