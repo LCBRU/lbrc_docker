@@ -16,7 +16,6 @@ ENTRYPOINT [  \
     "--no-ws", \
     "--workers","1", \
     "--blocking-threads","2", \
-    "--loop","uvloop", \
     "--log-level","info",\
     "--log", \
     "--process-name", \
