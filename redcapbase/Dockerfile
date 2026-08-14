@@ -27,7 +27,7 @@ RUN curl -fsSL https://github.com/Imagick/imagick/archive/944b67fce68bcb5835999a
     && yes '' | pecl install /tmp/imagick-944b67fce68bcb5835999a149f917670555b6fcb/package.xml \
     && docker-php-ext-enable imagick
 
-RUN sed -i 's/policy\ domain=\"coder\" rights=\"none\" pattern=\"PDF\"/policy domain=\"coder\" rights=\"read\" pattern=\"PDF\"/g' /etc/ImageMagick-6/policy.xml
+# RUN sed -i 's/policy\ domain=\"coder\" rights=\"none\" pattern=\"PDF\"/policy domain=\"coder\" rights=\"read\" pattern=\"PDF\"/g' /etc/ImageMagick-6/policy.xml
 
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu
 RUN docker-php-ext-install ldap
@@ -62,6 +62,11 @@ RUN unzip /var/www/redcap/redcap*.zip -d /var/www/redcap/
 RUN rm /var/www/redcap/redcap*.zip
 ADD database.php /var/www/redcap/redcap/
 ADD ldap_config.php /var/www/redcap/redcap/webtools2/ldap/ldap_config.php
+
+# Copy in Advanced Reporting Module files
+ADD advanced_reports_v*.zip /var/www/redcap/
+RUN unzip /var/www/redcap/advanced_reports_v*.zip -d /var/www/redcap/redcap/modules/
+RUN rm /var/www/redcap/advanced_reports_v*.zip
 
 RUN ln -s /var/www/redcap/redcap/hook_functions.php /var/www/html/
 

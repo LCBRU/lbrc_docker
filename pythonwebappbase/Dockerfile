@@ -15,8 +15,7 @@ ENTRYPOINT [  \
     "--interface","wsgi", \
     "--no-ws", \
     "--workers","1", \
-    "--threads","2", \
-    "--loop","uvloop", \
+    "--blocking-threads","2", \
     "--log-level","info",\
     "--log", \
     "--process-name", \
