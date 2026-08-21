@@ -1,7 +1,16 @@
 # Building
 build_airflow: .airflow.built
 
-.airflow.built:
+.airflow_dag.built:
+	if [ ! -d ./airflow/dags ]; then \
+		git clone https://github.com/LCBRU/airflow_dags ./airflow/dags; \
+	else \
+		cd ./airflow/dags && git pull; \
+	fi
+
+	touch $@
+
+.airflow.built: .airflow_dag.built
 	docker build -t lcbruit/airflow:latest ./airflow
 	touch $@
 
@@ -59,6 +68,7 @@ build_redcap: .redcap.built
 	touch $@
 
 build_clean:
+	rm -rf ./airflow/dags
 	rm -f .*.built
 
 build_all: .airflow.built .python.built .identity.built .image_study_merge.built .link_checker.built .redcap.built
@@ -126,6 +136,10 @@ push_redcap: .redcap.pushed
 push_clean:
 	rm -f .*.pushed
 
+clean_clean:
+	rm -f .*.cleaned
+
 push_all: .python.pushed .identity.pushed .image_study_merge.pushed link_checker.pushed .redcap.pushed
 
-clean: build_clean push_clean
+clean: clean_clean build_clean push_clean
+

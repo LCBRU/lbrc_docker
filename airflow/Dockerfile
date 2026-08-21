@@ -17,10 +17,10 @@ RUN ACCEPT_EULA=Y apt-get -y install --no-install-recommends \
     unixodbc-dev
 RUN apt-get clean
 
-COPY requirements.txt .
+COPY dags/ /opt/airflow/dags/
 
 USER airflow
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir --user -q -r requirements.txt --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-3.3.1/constraints-3.14.txt"
+RUN pip install --no-cache-dir --user -q -r /opt/airflow/dags/requirements.txt --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-3.3.1/constraints-3.14.txt"
 
 COPY webserver_config.py .
