@@ -8,10 +8,23 @@ build_airflow: .airflow.built
 		cd ./airflow/dags && git pull; \
 	fi
 
+	dest=./airflow/requirements.txt; \
+	src=./airflow/dags/requirements.txt; \
+	if ! cmp -s "$$src" "$$dest"; then \
+		cp "$$src" "$$dest"; \
+	fi
+
+	dest=./airflow/requirements.include; \
+	src=./airflow/dags/requirements.include; \
+	if ! cmp -s "$$src" "$$dest"; then \
+		cp "$$src" "$$dest"; \
+	fi
+
 	touch $@
 
 .airflow.built: .airflow_dag.built
 	docker build -t lcbruit/airflow:latest ./airflow
+	rm -fR ./airflow/dags
 	touch $@
 
 build_python: .python.built
