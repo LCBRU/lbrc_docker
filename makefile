@@ -23,14 +23,14 @@ build_airflow: .airflow.built
 	touch $@
 
 .airflow.built: .airflow_dag.built
-	docker build -t lcbruit/airflow:latest ./airflow
+	docker build --pull -t lcbruit/airflow:latest ./airflow
 	rm -fR ./airflow/dags
 	touch $@
 
 build_python: .python.built
 
 .python.built:
-	docker build -t lcbruit/linuxbase:latest ./linuxbase
+	docker build --pull -t lcbruit/linuxbase:latest ./linuxbase
 	docker build -t lcbruit/pythonbase:latest ./pythonbase
 	docker build -t lcbruit/pythonwebappbase:latest ./pythonwebappbase
 	touch $@
@@ -70,7 +70,7 @@ build_mssql_github: .mssql_github.built
 build_redcap: .redcap.built
 
 .redcap.built:
-	docker build -t lcbruit/redcapbase:latest ./redcapbase
+	docker build --pull -t lcbruit/redcapbase:latest ./redcapbase
 
 	docker build --build-arg redcap_directory=redcap_dev --build-arg image_type=dev -t lcbruit/redcap_dev:latest ./redcap_specific
 	docker build --build-arg redcap_directory=genvasc_redcap --build-arg image_type=genvasc -t lcbruit/redcap_genvasc:latest ./redcap_specific
